@@ -76,7 +76,7 @@ if __name__ == '__main__':
         lambda x: project_names[x[0]] not in projects_present, enumerate(project_urls)))
 
     fetched_projects = fetchProjects(projects_to_fetch, base_path)
-    fetched_projects = map(lambda x: x[1], filter(lambda x, y: y == 1, fetched_projects))
+    fetched_projects = map(lambda x: x[0], filter(lambda x: x[1] == 1, fetched_projects))
 
     projects_present_paths.extend(fetched_projects)
     response = {}
