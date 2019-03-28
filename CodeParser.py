@@ -41,6 +41,7 @@ def printAnn(node, response):
         name = node.name
 
     for annotation in node.annotations:
+        # import pdb;pdb.set_trace();
         response.append((name, str(type(node)).split('.')[-1][:-2], annotation.name))
 
 
@@ -60,7 +61,7 @@ def writeOutputCSV(output):
     for project_name, file_path, annotations in output:
         file_name = os.sep.join(file_path.split(os.sep)[9:])
         for ann in annotations:
-            f.write("{},{},{},{}\n".format(
+            f.write("{},{},{},{},{}\n".format(
                 project_name, file_name, ann[0], ann[1], ann[2]))
     f.close()
 
