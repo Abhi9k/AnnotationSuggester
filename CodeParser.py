@@ -31,9 +31,10 @@ from fetch_repository import fetchProjects
 
 # 3. Final CSV output
 
-#     Project Name, File Name, Class Name, Type, Annotation Name, Line Number
+#     Project Name, File Name, Element Name, Element Type, Annotation Name
 
-#     Type is an enum [Constructor, Method,Field]
+#     Type is an enum [MethodDeclaration, ClassDeclaration,
+#                      ConstructorDeclaration, FieldDeclaration]
 
 def printAnn(node, response):
     name = ''
@@ -41,7 +42,6 @@ def printAnn(node, response):
         name = node.name
 
     for annotation in node.annotations:
-        # import pdb;pdb.set_trace();
         response.append((name, str(type(node)).split('.')[-1][:-2], annotation.name))
 
 
@@ -56,8 +56,8 @@ def process(node, response):
         process(node.body, response)
 
 
-def writeOutputCSV(output):
-    f = open('output' + os.sep + 'data.csv', 'w')
+def writeOutputCSV(output, project_name):
+    f = open('output' + os.sep + project_name + os.sep + 'data.csv', 'w')
     for project_name, file_path, annotations in output:
         file_name = os.sep.join(file_path.split(os.sep)[9:])
         for ann in annotations:
@@ -87,8 +87,9 @@ if __name__ == '__main__':
         fetchJavaFiles(project_path, response[name])
 
     counter = count()
-    final_response = []
+
     for project_path in response:
+        final_response = []
         project_name = os.path.split(project_path)[-1]
         for file in response[project_path]:
             annotations = []
@@ -102,4 +103,4 @@ if __name__ == '__main__':
             except javalang.parser.JavaSyntaxError:
                 print "error while parsing " + file
 
-    writeOutputCSV(final_response)
+        writeOutputCSV(final_response, project_name)
