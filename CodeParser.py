@@ -86,10 +86,9 @@ if __name__ == '__main__':
         response[name] = []
         fetchJavaFiles(project_path, response[name])
 
-    counter = count()
-
     for project_path in response:
         final_response = []
+        counter = count()
         project_name = os.path.split(project_path)[-1]
         for file in response[project_path]:
             annotations = []
