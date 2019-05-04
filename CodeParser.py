@@ -57,6 +57,7 @@ def process(node, response):
 
 
 def writeOutputCSV(output, project_name):
+    os.system("mkdir -p " + 'output' + os.sep + project_name)
     f = open('output' + os.sep + project_name + os.sep + 'data.csv', 'w')
     for project_name, file_path, annotations in output:
         file_name = os.sep.join(file_path.split(os.sep)[9:])
